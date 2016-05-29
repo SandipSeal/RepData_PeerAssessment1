@@ -1,14 +1,18 @@
 ---
-output: html_document
+output: 
+  html_document: 
+    keep_md: yes
 ---
 Assignment: Course Project 1
 ============================
 
 This is R Markdown documentation for course Assignment.
 
+## Loading and preprocessing the data
+
 Here we are loading the Activity data-set in R. We then process the data to create a new data-frame after removing the null "step" records;also we transform the "date" field to R Date data-type.
 
-```{r}
+```{r loading data}
 act <- read.csv("/Users/Sandip/Documents/Data/Knowledge\ Base/Big\ Data/R\ Programming/Assignment_Data/activity.csv", header = TRUE, na.strings = "NA")
 act_s <- act[!is.na(act$steps),]
 act_s$date = as.Date(act_s$date)
@@ -17,7 +21,7 @@ summary(act_s)
 
 We first Calculate the total number of steps taken per day and create histogram and bar-plot for the total number of steps taken each day
 
-```{r}
+```{r Steps Count}
 # Calculate the count of steps per day
 aggr <- aggregate(steps~date,act_s,sum)
 par(mfrow = c(1,2), mar = c(6,4,2,2) )
@@ -28,7 +32,7 @@ barplot(aggr$steps,names.arg = aggr$date, main = "Step Count per Day", xlab = "D
 
 We calculate the Mean and Median of the total number of steps taken for each day and then plot the same using base plot.
 
-```{r, results='asis'}
+```{r, Steps Count Aggregate}
 aggr_mean <- aggregate(steps~date,act_s,mean)
 aggr_median <- aggregate(steps~date,act_s,median)
 par(mfrow = c(1,2), mar = c(6,4,2,2) )
@@ -40,7 +44,7 @@ with(aggr_median, points (date,steps,col = "Blue"))
 
 Here we create a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
-```{r}
+```{r Steps Mean and Median}
 aggr_int_mean <- aggregate(steps~interval,act_s,mean)
 with(aggr_int_mean, plot (interval,steps,type = "l",axes = FALSE))
 with(aggr_int_mean, points (interval,steps))
@@ -51,19 +55,19 @@ axis(side = 2, at = seq(0,210,20))
 
 Following 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps:
 
-```{r}
+```{r aggregate}
 aggr_int_mean[aggr_int_mean$steps == max(aggr_int_mean$steps),1]
 ```
 
 
 We now calculate the total no. of missing values ("NA") in the data-set -
-```{r}
+```{r Missing Count}
 sapply(act, function(x) sum(is.na(x)))
 ```
 
 Here we replace "NA"s will mean value for every 5 min interval; also we convert the date field to R Date data-type:
 
-```{r}
+```{r replace missing}
 x = aggregate(steps~interval,act,mean,na.rm = TRUE)
 
 for (i in x$interval){
@@ -74,19 +78,19 @@ act$date = as.Date(act$date)
 
 Inspecting the data-frame again to find if all the "NA"s are removed -
 
-```{r}
+```{r validate}
 sapply(act, function(x) sum(is.na(x)))
 ```
 
 Here we plot the histogram for total number of steps per day
-```{r}
+```{r plot hist}
 aggr <- aggregate(steps~date,act,sum)
 hist(aggr$steps,xlab = "Steps", main = "Frequency of Steps per Day", col = "red",breaks = 60)
 ```
 
 We calculate the Mean and Median of the total number of steps taken for each day and then plot the same using base plot.
 
-```{r}
+```{r Plot Mean and Median}
 aggr_mean <- aggregate(steps~date,act,mean)
 aggr_median <- aggregate(steps~date,act,median)
 par(mfrow = c(1,2), mar = c(6,4,2,2) )
@@ -99,7 +103,7 @@ Here we find that, for the new data set the value of Median is greater than "0" 
 
 
 We now add a new variable to the data-frame to indicate whether the date is a Weekday or Weekend
-```{r}
+```{r Creating Factor}
 act$Weekday = "Weekday"
 act[weekdays(act$date) %in% c("Saturday", "Sunday"),4] = "Weekend"
 aggr <- aggregate(steps~interval+Weekday,act,mean)
@@ -108,7 +112,7 @@ aggr$Weekday = as.factor(aggr$Weekday)
 
 Here we plot Average Number of Steps per 5 min interval for all the days (grouped by Weekday indicator). We use Lattice plotting system here.
 
-```{r}
+```{r Lattice Plot}
 library(lattice)
 xyplot((aggr$steps)~aggr$interval|aggr$Weekday, type = "l", xlab = "5 Min Interval", ylab = "Average Steps", layout = c(1,2))
 ```

@@ -3,6 +3,8 @@ Assignment: Course Project 1
 
 This is R Markdown documentation for course Assignment.
 
+## Loading and preprocessing the data
+
 Here we are loading the Activity data-set in R. We then process the data to create a new data-frame after removing the null "step" records;also we transform the "date" field to R Date data-type.
 
 
@@ -34,7 +36,7 @@ hist(aggr$steps,xlab = "Steps", main = "Frequency of Steps per Day", col = "red"
 barplot(aggr$steps,names.arg = aggr$date, main = "Step Count per Day", xlab = "Date", ylab = "Steps Count")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+![](PA1_template_files/figure-html/Steps Count-1.png)<!-- -->
 
 
 We calculate the Mean and Median of the total number of steps taken for each day and then plot the same using base plot.
@@ -50,7 +52,7 @@ with(aggr_median, plot (date,steps,type = "l",main = "Per Day Median for Steps",
 with(aggr_median, points (date,steps,col = "Blue"))
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
+![](PA1_template_files/figure-html/Steps Count Aggregate-1.png)<!-- -->
 
 Here we create a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
@@ -63,7 +65,7 @@ axis(side = 1, at = seq(0,2500,50))
 axis(side = 2, at = seq(0,210,20))
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](PA1_template_files/figure-html/Steps Mean and Median-1.png)<!-- -->
 
 
 Following 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps:
@@ -120,7 +122,7 @@ aggr <- aggregate(steps~date,act,sum)
 hist(aggr$steps,xlab = "Steps", main = "Frequency of Steps per Day", col = "red",breaks = 60)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](PA1_template_files/figure-html/plot hist-1.png)<!-- -->
 
 We calculate the Mean and Median of the total number of steps taken for each day and then plot the same using base plot.
 
@@ -135,7 +137,7 @@ with(aggr_median, plot (date,steps,type = "l",main = "Per Day Median for Steps",
 with(aggr_median, points (date,steps,col = "Blue"))
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
+![](PA1_template_files/figure-html/Plot Mean and Median-1.png)<!-- -->
 Here we find that, for the new data set the value of Median is greater than "0" for few days compared to all "0"s in the previous data-set.
 
 
@@ -156,5 +158,5 @@ library(lattice)
 xyplot((aggr$steps)~aggr$interval|aggr$Weekday, type = "l", xlab = "5 Min Interval", ylab = "Average Steps", layout = c(1,2))
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+![](PA1_template_files/figure-html/Lattice Plot-1.png)<!-- -->
 
