@@ -25,6 +25,9 @@ summary(act_s)
 ##  Max.   :806.00   Max.   :2012-11-29   Max.   :2355.0
 ```
 
+## What is mean total number of steps taken per day?
+
+
 We first Calculate the total number of steps taken per day and create histogram and bar-plot for the total number of steps taken each day
 
 
@@ -54,6 +57,8 @@ with(aggr_median, points (date,steps,col = "Blue"))
 
 ![](PA1_template_files/figure-html/Steps Count Aggregate-1.png)<!-- -->
 
+## What is the average daily activity pattern?
+
 Here we create a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 
@@ -79,6 +84,7 @@ aggr_int_mean[aggr_int_mean$steps == max(aggr_int_mean$steps),1]
 ## [1] 835
 ```
 
+## Imputing missing values
 
 We now calculate the total no. of missing values ("NA") in the data-set -
 
@@ -140,6 +146,7 @@ with(aggr_median, points (date,steps,col = "Blue"))
 ![](PA1_template_files/figure-html/Plot Mean and Median-1.png)<!-- -->
 Here we find that, for the new data set the value of Median is greater than "0" for few days compared to all "0"s in the previous data-set.
 
+## Are there differences in activity patterns between weekdays and weekends?
 
 We now add a new variable to the data-frame to indicate whether the date is a Weekday or Weekend
 

@@ -19,6 +19,9 @@ act_s$date = as.Date(act_s$date)
 summary(act_s)
 ```
 
+## What is mean total number of steps taken per day?
+
+
 We first Calculate the total number of steps taken per day and create histogram and bar-plot for the total number of steps taken each day
 
 ```{r Steps Count}
@@ -42,6 +45,8 @@ with(aggr_median, plot (date,steps,type = "l",main = "Per Day Median for Steps",
 with(aggr_median, points (date,steps,col = "Blue"))
 ```
 
+## What is the average daily activity pattern?
+
 Here we create a time series plot of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 
 ```{r Steps Mean and Median}
@@ -59,6 +64,7 @@ Following 5-minute interval, on average across all the days in the dataset, cont
 aggr_int_mean[aggr_int_mean$steps == max(aggr_int_mean$steps),1]
 ```
 
+## Imputing missing values
 
 We now calculate the total no. of missing values ("NA") in the data-set -
 ```{r Missing Count}
@@ -101,6 +107,7 @@ with(aggr_median, points (date,steps,col = "Blue"))
 ```
 Here we find that, for the new data set the value of Median is greater than "0" for few days compared to all "0"s in the previous data-set.
 
+## Are there differences in activity patterns between weekdays and weekends?
 
 We now add a new variable to the data-frame to indicate whether the date is a Weekday or Weekend
 ```{r Creating Factor}
